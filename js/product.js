@@ -33,6 +33,13 @@ fetch(productsListURI)
   .then((res) => res.json())
   .then((data) => {
     //
+    // Craft an "" id "" html element
+    let idEl = document.createElement('span')
+        idEl.innerText = data._id
+        idEl.setAttribute('id', "id")
+        idEl.style.display = "none"
+    itemEl.insertAdjacentElement('afterbegin', idEl)
+    //
     // Page title
     titleEl.innerText = titleEl.innerText + ' - ' + data.name
     //
@@ -62,7 +69,17 @@ fetch(productsListURI)
   })
   //
   // Add-to-cart button event
-  addToCartBtn.addEventListener('click', (ev) => {
+  addToCartBtnEl.addEventListener('click', (ev) => {
     // @TODO
+    let id = document.querySelector('#id').innerText
+    let productObj = {
+        id: id,
+        img: itemImgEl.querySelector('img').getAttribute('src'),
+        price: itemPriceEl.innerText,
+        name: itemTitleEl.innerText,
+        description: itemDescEl.innerText,
+        color: itemColorsEl.value
+    }
+    localStorage.setItem('id', productObj)
   })
 // EOF
